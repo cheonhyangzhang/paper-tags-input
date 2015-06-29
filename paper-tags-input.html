@@ -1,0 +1,200 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <seed-element></seed-element>
+
+@demo
+-->
+<dom-module id="paper-tags-input">
+
+  <style>
+    :host {
+      display: block;
+      box-sizing: border-box;
+      font-family: 'Roboto', 'Noto', sans-serif;
+    }
+
+    .author img {
+      float: left;
+      margin-right: 5px;
+      max-height: 100px;
+      max-width: 100px;
+    }
+    .tag-item{
+      background-color: var(--light-primary-color);
+      padding-left:12px;
+      border-radius: 20px;
+      float:left;
+      margin-right:10px; 
+      margin-bottom:5px;
+    }
+    .clearfix:after { 
+     content: " ";
+     display: block; 
+     height: 0; 
+     clear: both;
+    }
+  </style>
+
+  <template>
+  <h3>Label</h3> 
+    <div class="clearfix" id="tags-items">
+    <template is="dom-repeat" items="{{tags}}">
+      <div class="tag-item">
+        <span>{{item}}</span>
+      <!-- <iron-icon icon="icons:cancel"></iron-icon> -->
+      <paper-icon-button icon="icons:cancel"></paper-icon-button>
+      </div>
+    </template>
+    </div>
+     <paper-input label="Input label" on-keydown="keyDown" value="{{input_value}}"></paper-input>
+  </template>
+
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'paper-tags-input',
+
+    properties: {
+
+      /**
+       * `fancy` indicates that the element should don a monocle and tophat,
+       * while checking its pocket watch.
+       */
+      tags:{
+        type:Array,
+        value:['test','just another test', 'this looks awesome great', 'this looks awesome great', 'this looks awesome great', 'this looks awesome great', 'this looks awesome great'],
+        notify: true
+      },
+      input_value: String,
+      fancy: Boolean,
+
+      /**
+       * Describes the author of the element, but is really just an excuse to
+       * show off JSDoc annotations.
+       *
+       * @type {{name: string, image: string}}
+       */
+      author: {
+        type: Object,
+        // Use `value` to provides a default value for a property, by setting it
+        // on your element's prototype.
+        //
+        // If you provide a function, as we do here, Polymer will call that
+        // _per element instance_.
+        //
+        // We do that to ensure that each element gets its own copy of the
+        // value, rather than having it shared across all instances (via the
+        // prototype).
+        value: function() {
+          return {
+            name:  'Dimitri Glazkov',
+            image: 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg',
+          };
+        }
+      },
+
+    },
+
+    // Element Lifecycle
+
+    ready: function() {
+      // `ready` is called after all elements have been configured, but
+      // propagates bottom-up. This element's children are ready, but parents
+      // are not.
+      //
+      // This is the point where you should make modifications to the DOM (when
+      // necessary), or kick off any processes the element wants to perform.
+    },
+
+    attached: function() {
+      // `attached` fires once the element and its parents have been inserted
+      // into a document.
+      //
+      // This is a good place to perform any work related to your element's
+      // visual state or active behavior (measuring sizes, beginning animations,
+      // loading resources, etc).
+    },
+
+    detached: function() {
+      // The analog to `attached`, `detached` fires when the element has been
+      // removed from a document.
+      //
+      // Use this to clean up anything you did in `attached`.
+    },
+
+    // Element Behavior
+
+    /**
+     * The `seed-element-lasers` event is fired whenever `fireLasers` is called.
+     *
+     * @event seed-element-lasers
+     * @detail {{sound: String}}
+     */
+
+    /**
+     * Sometimes it's just nice to say hi.
+     *
+     * @param {string} greeting A positive greeting.
+     * @return {string} The full greeting.
+     */
+    sayHello: function(greeting) {
+      var response = greeting || 'Hello World!';
+      return 'seed-element says, ' + response;
+    },
+    _addTag: function(tag){
+      this.tags.push(tag);
+      this.tags = this.tags.slice();  
+    },
+    /**
+     * keyDown is fired when user enters a key in the input
+     *
+     * @param {e} greeting A positive greeting.
+     */
+    keyDown: function(e) {
+      var keyVal = e.which;
+      if (keyVal == 13){
+        //enter key
+        console.log("add value");
+        if (this.input_value == ""){
+
+        }
+        else{
+          this._addTag(this.input_value);
+          this.input_value = "";
+        }
+      }
+    },
+    /**
+     * Attempts to destroy this element's enemies with an any beam of light!
+     *
+     * Or, at least, dispatches an event in the vain hope that someone else will
+     * do the zapping.
+     */
+    fireLasers: function() {
+      this.fire('seed-element-lasers', {sound: 'Pew pew!'});
+    }
+
+  });
+
+</script>
