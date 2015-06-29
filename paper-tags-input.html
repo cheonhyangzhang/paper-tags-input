@@ -18,7 +18,7 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-    <seed-element></seed-element>
+    <paper-tags-inpu></paper-tags-input>
 
 @demo
 -->
@@ -54,7 +54,7 @@ Example:
   </style>
 
   <template>
-  <h3>Label</h3> 
+  <h3>{{label}}</h3> 
     <div class="clearfix" id="tags-items">
     <template is="dom-repeat" items="{{tags}}">
       <div class="tag-item">
@@ -64,7 +64,7 @@ Example:
       </div>
     </template>
     </div>
-     <paper-input label="Input label" on-keydown="keyDown" value="{{input_value}}"></paper-input>
+     <paper-input id="tag-input" error-message="Invalid input!" label="{{label}}" on-keydown="keyDown" value="{{input_value}}"></paper-input>
   </template>
 
 </dom-module>
@@ -78,41 +78,17 @@ Example:
     properties: {
 
       /**
-       * `fancy` indicates that the element should don a monocle and tophat,
-       * while checking its pocket watch.
+       * list of String that holds tags
        */
       tags:{
         type:Array,
-        value:['test','just another test', 'this looks awesome great', 'this looks awesome great', 'this looks awesome great', 'this looks awesome great', 'this looks awesome great'],
-        notify: true
+        notify: true,
+        value:[],
+       
       },
-      input_value: String,
-      fancy: Boolean,
+      label:String,
+      _input_value: String,
 
-      /**
-       * Describes the author of the element, but is really just an excuse to
-       * show off JSDoc annotations.
-       *
-       * @type {{name: string, image: string}}
-       */
-      author: {
-        type: Object,
-        // Use `value` to provides a default value for a property, by setting it
-        // on your element's prototype.
-        //
-        // If you provide a function, as we do here, Polymer will call that
-        // _per element instance_.
-        //
-        // We do that to ensure that each element gets its own copy of the
-        // value, rather than having it shared across all instances (via the
-        // prototype).
-        value: function() {
-          return {
-            name:  'Dimitri Glazkov',
-            image: 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg',
-          };
-        }
-      },
 
     },
 
@@ -158,10 +134,6 @@ Example:
      * @param {string} greeting A positive greeting.
      * @return {string} The full greeting.
      */
-    sayHello: function(greeting) {
-      var response = greeting || 'Hello World!';
-      return 'seed-element says, ' + response;
-    },
     _addTag: function(tag){
       this.tags.push(tag);
       this.tags = this.tags.slice();  
@@ -177,13 +149,20 @@ Example:
         //enter key
         console.log("add value");
         if (this.input_value == ""){
-
+          var input = document.querySelector('#tag-input');
+          input.errorMessage = "Input cannot be empty";
+          input.invalid=true;
+          console.log(input);
         }
         else{
           this._addTag(this.input_value);
           this.input_value = "";
         }
       }
+      else{
+          var input = document.querySelector('#tag-input');
+          input.invalid=false;
+        }
     },
     /**
      * Attempts to destroy this element's enemies with an any beam of light!
