@@ -12,6 +12,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="tag-item.html">
+<link rel="import" href="tag-remove-button.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -57,14 +59,15 @@ Example:
   <h3>{{label}}</h3> 
     <div class="clearfix" id="tags-items">
     <template is="dom-repeat" items="{{tags}}">
+      <!-- <tag-item on-tap="{{removeItem}}" value="{{item}}"></tag-item> -->
       <div class="tag-item">
         <span>{{item}}</span>
-      <!-- <iron-icon icon="icons:cancel"></iron-icon> -->
-      <paper-icon-button icon="icons:cancel"></paper-icon-button>
+      <paper-icon-button  data-index="{{index}}" on-tap="removeItem" icon="icons:cancel"></paper-icon-button>
+      <!-- <tag-remove-button  index="{{index}}" on-tap="removeItem" ></tag-remove-button> -->
       </div>
     </template>
     </div>
-     <paper-input id="tag-input" error-message="Invalid input!" label="{{label}}" on-keydown="keyDown" value="{{input_value}}"></paper-input>
+     <paper-input id="tag-input" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="keyDown" value="{{input_value}}"></paper-input>
   </template>
 
 </dom-module>
@@ -84,10 +87,22 @@ Example:
         type:Array,
         notify: true,
         value:[],
-       
+      },
+      emptyErrorMessage:{
+        type:String,
+        value:"Tag cannot be empty"
+      },
+      duplicateErrorMessage:{
+        type:String,
+        value:"Tag must be identical"
       },
       label:String,
+      placehodler:String,
       _input_value: String,
+      _dict:{
+        type:Object,
+        value:{}
+      }
 
 
     },
@@ -135,8 +150,22 @@ Example:
      * @return {string} The full greeting.
      */
     _addTag: function(tag){
+      if (typeof(this.tags) == 'undefined'){
+        this.tags = [];
+      }
       this.tags.push(tag);
       this.tags = this.tags.slice();  
+      this._dict[tag] = true;
+    },
+    _getInputVal: function(){
+      return this.input_value.trim();
+    },
+    removeItem: function(e, detail, target){
+      console.log("remove");
+      console.log(this.index);
+      console.log(e.target.parentElement);
+      console.log(detail);
+      console.log(target);
     },
     /**
      * keyDown is fired when user enters a key in the input
@@ -147,15 +176,18 @@ Example:
       var keyVal = e.which;
       if (keyVal == 13){
         //enter key
-        console.log("add value");
-        if (this.input_value == ""){
+        if (this._getInputVal() == ""){
           var input = document.querySelector('#tag-input');
-          input.errorMessage = "Input cannot be empty";
+          input.errorMessage = this.emptyErrorMessage;
           input.invalid=true;
-          console.log(input);
+        }
+        else if (this._getInputVal() in this._dict){
+          var input = document.querySelector('#tag-input');
+          input.errorMessage = this.emptyErrorMessage;
+          input.invalid=true;
         }
         else{
-          this._addTag(this.input_value);
+          this._addTag(this._getInputVal());
           this.input_value = "";
         }
       }

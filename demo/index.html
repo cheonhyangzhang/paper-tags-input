@@ -16,18 +16,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../paper-tags-input.html">
   </head>
-  <body>
+  <body >
+    <template is="dom-bind" id="app">
     <p>An example of <code>&lt;paper-tags-input&gt;</code>:</p>
-    <paper-tags-input label="Demo label" >
+    <paper-tags-input tags="{{testtags}}" 
+    placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Demo label" >
     </paper-tags-input>
 
 
-
     <script>
+        window.addEventListener('WebComponentsReady', function() {
+      // imports are loaded and elements have been registered
+        console.log("WebComp ready");
+        var app = document.querySelector('#app');
+        app.testtags = ['Taeyeon','Jessica','Tiffany']
+      });
       // document.querySelector('button').addEventListener('click', function() {
         // alert(document.querySelector('seed-element').sayHello('Hallo!'));
       // });
     </script>
-
+    </template>
   </body>
 </html>
