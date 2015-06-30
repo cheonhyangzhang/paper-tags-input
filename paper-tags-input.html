@@ -13,40 +13,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="tag-item.html">
-<link rel="import" href="tag-remove-button.html">
 
 <!--
-An element providing a solution to no problem in particular.
 
-Example:
+paper-tags-input is a list of tags with a single-line text field with Material Design styling.
 
     <paper-tags-input></paper-tags-input>
+
+Use a label property to show the label for tags input and placeholder property for the placeholder in paper-input element.
+
+    <paper-tags-input label="Tags" placeholder="Please enter the tag"></paper-tags-input>
+
+It may include an optional error message. For now, the tags list is case sensitive. So Taeyeon and taeyeon will not be considered as duplicate.
+  
+    <paper-tags-input empty-error-message="Tag could not be empty"></paper-tags-input>
+    <paper-tags-input duplicate-error-message="Tag could not be duplicate"></paper-tags-input>
+
+Tags list are stored in the property of tags.
+
+    <paper-tags-input tags="{{tags_list}}"></paper-tags-input>
+
+<b>Styling</b>
+
+For the color of tags, it is using theme color --light-primary-color.
 
 @demo
 -->
 <dom-module id="paper-tags-input">
-
   <style>
     :host {
       display: block;
       box-sizing: border-box;
       font-family: 'Roboto', 'Noto', sans-serif;
     }
-
-    .author img {
-      float: left;
-      margin-right: 5px;
-      max-height: 100px;
-      max-width: 100px;
-    }
-/*    .tag-item{
-      background-color: var(--light-primary-color);
-      padding-left:12px;
-      border-radius: 20px;
-      float:left;
-      margin-right:10px; 
-      margin-bottom:5px;
-    }*/
     .clearfix:after { 
      content: " ";
      display: block; 
@@ -59,15 +58,11 @@ Example:
   <h3>{{label}}</h3> 
     <div class="clearfix" id="tags-items">
     <template is="dom-repeat" items="{{tags}}">
-      <tag-item on-tap="removeItem" index="{{index}}" value="{{item}}"></tag-item>
-      <!-- <div class="tag-item"> -->
-        <!-- <span>{{item}}</span> -->
-      <!-- <paper-icon-button  data-index="{{index}}" on-tap="removeItem" icon="icons:cancel"></paper-icon-button> -->
-      <!-- <tag-remove-button  index="{{index}}" on-tap="removeItem" ></tag-remove-button> -->
+      <tag-item remove="_removeItem" index="{{index}}" value="{{item}}"></tag-item>
       </div>
     </template>
     </div>
-     <paper-input id="tag-input" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="keyDown" value="{{input_value}}"></paper-input>
+     <paper-input id="tag-input" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
   </template>
 
 </dom-module>
@@ -81,28 +76,45 @@ Example:
     properties: {
 
       /**
-       * list of String that holds tags
+       * list of String that holds tags. Values in this array should be identical and avoids duplicates due to the definition of tags.
        */
       tags:{
         type:Array,
         notify: true,
         value:[],
       },
+      /**
+       * The error message that will show up if a user tries to add an empty tag.
+       */
       emptyErrorMessage:{
         type:String,
         value:"Tag cannot be empty"
       },
+      /**
+       * The error message that will show up if a user tries to add a duplicate tag.
+       */
       duplicateErrorMessage:{
         type:String,
         value:"Tag must be identical"
       },
-      label:String,
-      placehodler:String,
+      /**
+       * The label that will show up as the label for tags input.
+       */
+      label:{
+        type:String,
+        value:''
+      },
+      /**
+       * The placeholder for the paper-input element.
+       */
+      placeholder:{
+        type:String,
+        value:'Please enter a new tag'
+      },
+      /**
+       * Internal variable to hold the value of paper-input.
+       */
       _input_value: String,
-      _dict:{
-        type:Object,
-        value:{}
-      }
 
 
     },
@@ -135,19 +147,10 @@ Example:
     },
 
     // Element Behavior
-
     /**
-     * The `seed-element-lasers` event is fired whenever `fireLasers` is called.
+     * _addTag is the internal method to add a new tag to the list
      *
-     * @event seed-element-lasers
-     * @detail {{sound: String}}
-     */
-
-    /**
-     * Sometimes it's just nice to say hi.
-     *
-     * @param {string} greeting A positive greeting.
-     * @return {string} The full greeting.
+     * @param {string} the tag that needs to be added.
      */
     _addTag: function(tag){
       if (typeof(this.tags) == 'undefined'){
@@ -155,34 +158,42 @@ Example:
       }
       this.tags.push(tag);
       this.tags = this.tags.slice();  
-      this._dict[tag] = true;
     },
+    /**
+     * _getInputVal is the internal method to get the value of paper-input. It performs a trim on the value.
+     *
+     * @return {string} returns the trimmed version of paper-input value.
+     */
     _getInputVal: function(){
       return this.input_value.trim();
     },
-    removeItem: function(e, detail, target){
+    /**
+     * _removeItem is the internal method to remove a tag from the tags list
+     *
+     * @param {object} event object
+     */
+    _removeItem: function(e){
       var parent = e.target.parentElement.parentElement.parentElement;
       var index = parent.index;
       this.tags.splice(index,1);
       this.tags = this.tags.slice();  
     },
     /**
-     * keyDown is fired when user enters a key in the input
+     * _keyDown is fired when user enters a key in the input
      *
-     * @param {e} greeting A positive greeting.
+     * @param {object} event object
      */
-    keyDown: function(e) {
+    _keyDown: function(e) {
       var keyVal = e.which;
       if (keyVal == 13){
-        //enter key
         if (this._getInputVal() == ""){
           var input = document.querySelector('#tag-input');
           input.errorMessage = this.emptyErrorMessage;
           input.invalid=true;
         }
-        else if (this._getInputVal() in this._dict){
+        else if (this.tags.indexOf(this._getInputVal()) >= 0){
           var input = document.querySelector('#tag-input');
-          input.errorMessage = this.emptyErrorMessage;
+          input.errorMessage = this.duplicateErrorMessage;
           input.invalid=true;
         }
         else{
@@ -194,15 +205,6 @@ Example:
           var input = document.querySelector('#tag-input');
           input.invalid=false;
         }
-    },
-    /**
-     * Attempts to destroy this element's enemies with an any beam of light!
-     *
-     * Or, at least, dispatches an event in the vain hope that someone else will
-     * do the zapping.
-     */
-    fireLasers: function() {
-      this.fire('seed-element-lasers', {sound: 'Pew pew!'});
     }
 
   });

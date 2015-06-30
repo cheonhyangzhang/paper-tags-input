@@ -22,7 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <body>
 
     <!-- You can use the document as a place to set up your fixtures. -->
-    <seed-element></seed-element>
+    <paper-tags-input></paper-tags-input>
 
     <script>
       var myEl = document.querySelector('paper-tags-input');
@@ -33,23 +33,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           assert.equal(myEl.tags, []);
           assert.equal(myEl.tags.length, 0);
           assert.equal(myEl.emptyErrorMessage, "Tag cannot be empty");
+          assert.equal(myEl.duplicateErrorMessage, "Tag must be identical");
+          assert.equal(myEl.label, "");
           assert.equal(myEl._input_value, "");
+          assert.equal(myEl.placehodler, "Please enter a new tag");
         });
 
         test('says hello', function() {
-          assert.equal(myEl.sayHello(), 'seed-element says, Hello World!');
-
-          var greetings = myEl.sayHello('greetings Earthlings');
-          assert.equal(greetings, 'seed-element says, greetings Earthlings');
+          myEl._addTag("QianBenLuLu");
+          assert.equal(myEl.tags, ["QianBenLuLu"]);
+          assert.equal(myEl.tags.length, 1);
+          myEl._input_value = "Tayeon";
+          assert.equal(myEl._getInputVal, "Tayeon");
+          myEl._input_value = " Tayeon";
+          assert.equal(myEl._getInputVal, "Tayeon");
+          myEl._input_value = " Tayeon   ";
+          assert.equal(myEl._getInputVal, "Tayeon");
+          myEl._input_value = " Tayeon   Jessica";
+          assert.equal(myEl._getInputVal, "Tayeon   Jessica");
         });
 
-        test('fires lasers', function(done) {
-          myEl.addEventListener('seed-element-lasers', function(event) {
-            assert.equal(event.detail.sound, 'Pew pew!');
-            done();
-          });
-          myEl.fireLasers();
-        });
 
       });
     </script>

@@ -14,11 +14,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-icons/iron-icons.html">
 
 <!--
-An element providing a solution to no problem in particular.
+tag-item is a tag element used by tags-input to show tags with a closed button.
 
-Example:
-
-    <paper-tags-inpu></paper-tags-input>
+    <tag-item></tag-item>
 
 @demo
 -->
@@ -29,38 +27,24 @@ Example:
       display: block;
       box-sizing: border-box;
       font-family: 'Roboto', 'Noto', sans-serif;
-      /*font-size:20px;*/
-    }
-    /*
-    .tag-item{
-      background-color: var(--light-primary-color);
-      padding-left:12px;
-      float:left;
-      margin-right:10px; 
-      margin-bottom:5px;
-    }*/
-    .tag-item{
+    }    .tag-item{
       background-color: var(--light-primary-color);
       border-radius: 20px;
       float:left;
+      margin-left:6px;
+      margin-bottom:3px;
       padding-left:6px;
-      /*padding-top:5px;*/
-      /*margin-right:5px;*/
     }
     #tag-value{
-      margin-top: 10px;     
+      margin-top: 11px;     
     }
   </style>
 
   <template>
       <div class="tag-item">
         <span id="tag-value">{{value}}</span>
-        <paper-icon-button icon="icons:cancel"></paper-icon-button>
+        <paper-icon-button on-tap="remove" icon="icons:cancel"></paper-icon-button>
       </div>
-      <!-- <div class="tag-item"> -->
-        <!-- <span>{{value}}</span> -->
-      <!-- <iron-icon icon="icons:cancel"></iron-icon> -->
-      <!-- </div> -->
   </template>
 
 </dom-module>
@@ -68,11 +52,19 @@ Example:
 <script>
 
   Polymer({
-
     is: 'tag-item',
-
     properties: {
+      /**
+      * index of the tag
+      */
        index:Number,
+      /**
+      * remove function that will be called when click on closed button
+      */
+       remove:Object,
+      /**
+      * value of the tag
+      */
        value:String
     }
 
