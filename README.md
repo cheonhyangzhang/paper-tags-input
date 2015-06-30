@@ -5,6 +5,7 @@ paper-tags-input is a list of tags with a single-line text field with Material D
 
 ## Demo
 
+[Documentation and Demo](http://cheonhyangzhang.github.io/paper-tags-input/components/paper-tags-input/)
 
 ## Dependencies
 
