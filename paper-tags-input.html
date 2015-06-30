@@ -20,7 +20,7 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-    <paper-tags-inpu></paper-tags-input>
+    <paper-tags-input></paper-tags-input>
 
 @demo
 -->
@@ -39,14 +39,14 @@ Example:
       max-height: 100px;
       max-width: 100px;
     }
-    .tag-item{
+/*    .tag-item{
       background-color: var(--light-primary-color);
       padding-left:12px;
       border-radius: 20px;
       float:left;
       margin-right:10px; 
       margin-bottom:5px;
-    }
+    }*/
     .clearfix:after { 
      content: " ";
      display: block; 
@@ -59,10 +59,10 @@ Example:
   <h3>{{label}}</h3> 
     <div class="clearfix" id="tags-items">
     <template is="dom-repeat" items="{{tags}}">
-      <!-- <tag-item on-tap="{{removeItem}}" value="{{item}}"></tag-item> -->
-      <div class="tag-item">
-        <span>{{item}}</span>
-      <paper-icon-button  data-index="{{index}}" on-tap="removeItem" icon="icons:cancel"></paper-icon-button>
+      <tag-item on-tap="removeItem" index="{{index}}" value="{{item}}"></tag-item>
+      <!-- <div class="tag-item"> -->
+        <!-- <span>{{item}}</span> -->
+      <!-- <paper-icon-button  data-index="{{index}}" on-tap="removeItem" icon="icons:cancel"></paper-icon-button> -->
       <!-- <tag-remove-button  index="{{index}}" on-tap="removeItem" ></tag-remove-button> -->
       </div>
     </template>
@@ -161,11 +161,10 @@ Example:
       return this.input_value.trim();
     },
     removeItem: function(e, detail, target){
-      console.log("remove");
-      console.log(this.index);
-      console.log(e.target.parentElement);
-      console.log(detail);
-      console.log(target);
+      var parent = e.target.parentElement.parentElement.parentElement;
+      var index = parent.index;
+      this.tags.splice(index,1);
+      this.tags = this.tags.slice();  
     },
     /**
      * keyDown is fired when user enters a key in the input

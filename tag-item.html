@@ -29,24 +29,38 @@ Example:
       display: block;
       box-sizing: border-box;
       font-family: 'Roboto', 'Noto', sans-serif;
+      /*font-size:20px;*/
     }
+    /*
     .tag-item{
       background-color: var(--light-primary-color);
-
       padding-left:12px;
-      border-radius: 20px;
       float:left;
       margin-right:10px; 
       margin-bottom:5px;
+    }*/
+    .tag-item{
+      background-color: var(--light-primary-color);
+      border-radius: 20px;
+      float:left;
+      padding-left:6px;
+      /*padding-top:5px;*/
+      /*margin-right:5px;*/
+    }
+    #tag-value{
+      margin-top: 10px;     
     }
   </style>
 
   <template>
       <div class="tag-item">
-        <span>{{value}}</span>
-      <!-- <iron-icon icon="icons:cancel"></iron-icon> -->
-      <paper-icon-button on-tap="removeItem(0)" icon="icons:cancel"></paper-icon-button>
+        <span id="tag-value">{{value}}</span>
+        <paper-icon-button icon="icons:cancel"></paper-icon-button>
       </div>
+      <!-- <div class="tag-item"> -->
+        <!-- <span>{{value}}</span> -->
+      <!-- <iron-icon icon="icons:cancel"></iron-icon> -->
+      <!-- </div> -->
   </template>
 
 </dom-module>
