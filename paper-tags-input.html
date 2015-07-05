@@ -58,11 +58,14 @@ For the color of tags, it is using theme color --light-primary-color.
   <h3>{{label}}</h3> 
     <div class="clearfix" id="tags-items">
     <template is="dom-repeat" items="{{tags}}">
-      <tag-item remove="_removeItem" index="{{index}}" value="{{item}}"></tag-item>
+      <tag-item remove="_removeItem" enable-remove="{{enableRemove}}" index="{{index}}" value="{{item}}"></tag-item>
       </div>
     </template>
     </div>
-     <paper-input id="tag-input" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
+     <template is="dom-if" if="{{enableAdd}}">
+       <paper-input id="tag-input" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
+     </template>
+    
   </template>
 
 </dom-module>
@@ -89,6 +92,20 @@ For the color of tags, it is using theme color --light-primary-color.
       emptyErrorMessage:{
         type:String,
         value:"Tag cannot be empty"
+      },
+      /**
+       * Boolean flag for whether add tag operation is enabled.
+       */
+      enableAdd:{
+        type:Boolean,
+        value:true
+      },
+      /**
+       * Boolean flag for whether remove tag operation is enabled.
+       */
+      enableRemove:{
+        type:Boolean,
+        value:true
       },
       /**
        * The error message that will show up if a user tries to add a duplicate tag.
@@ -153,6 +170,9 @@ For the color of tags, it is using theme color --light-primary-color.
      * @param {string} the tag that needs to be added.
      */
     _addTag: function(tag){
+      if (this.enableAdd == false){
+        return;
+      }
       if (typeof(this.tags) == 'undefined'){
         this.tags = [];
       }
@@ -173,6 +193,9 @@ For the color of tags, it is using theme color --light-primary-color.
      * @param {object} event object
      */
     _removeItem: function(e){
+      if (this.enableRemove == false){
+        return;
+      }
       var parent = e.target.parentElement.parentElement.parentElement;
       var index = parent.index;
       this.tags.splice(index,1);

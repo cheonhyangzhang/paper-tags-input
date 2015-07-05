@@ -15,18 +15,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <title>paper-tags-input Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../paper-tags-input.html">
+    <link rel="import" href="../../paper-material/paper-material.html">
   </head>
+  <style>
+  .container{
+    padding:20px;
+  }
+  </style>
   <body >
     <template is="dom-bind" id="app">
+    <paper-material class="container">
     <p>An example of <code>&lt;paper-tags-input&gt;</code>:</p>
     <paper-tags-input tags="{{testtags}}" 
     placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Demo label" >
     </paper-tags-input>
+    </paper-material>
+<!-- 
+    <paper-material class="container">
+    <p>A example of <code>&lt;paper-tags-input&gt;</code> that only supports remove tags but not add tags:</p>
+    <paper-tags-input enable-add="{{enable_add}}" tags="{{testtags}}" 
+    placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Demo label" >
+    </paper-tags-input>
+    </paper-material>
+
+
+    <paper-material class="container">
+    <p>A example of <code>&lt;paper-tags-input&gt;</code> that only supports remove tags but not add tags:</p>
+    <paper-tags-input enable-remove="{{enable_remove}}" tags="{{testtags}}" 
+    placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Demo label" >
+    </paper-tags-input>
+    </paper-material> -->
+
+    
 
 
     <script>
         window.addEventListener('WebComponentsReady', function() {
         var app = document.querySelector('#app');
+        app.enable_add = false;
+        app.enable_remove = false;
         app.testtags = ['QianBenLulu', 'Taeyeon','Jessica','Tiffany','Sunny','Yuri','Hyeoyeon','Seohyun','Sooyoung','Yoona']
       });
     </script>
