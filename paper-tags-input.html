@@ -58,7 +58,7 @@ For the color of tags, it is using theme color --light-primary-color.
   <h3>{{label}}</h3> 
     <div class="clearfix" id="tags-items">
     <template is="dom-repeat" items="{{tags}}">
-      <tag-item remove="_removeItem" enable-remove="{{enableRemove}}" index="{{index}}" value="{{item}}"></tag-item>
+      <tag-item tags="{{tags}}" enable-remove="{{enableRemove}}" index="{{index}}" value="{{item}}"></tag-item>
       </div>
     </template>
     </div>
@@ -186,20 +186,6 @@ For the color of tags, it is using theme color --light-primary-color.
      */
     _getInputVal: function(){
       return this.input_value.trim();
-    },
-    /**
-     * _removeItem is the internal method to remove a tag from the tags list
-     *
-     * @param {object} event object
-     */
-    _removeItem: function(e){
-      if (this.enableRemove == false){
-        return;
-      }
-      var parent = e.target.parentElement.parentElement.parentElement;
-      var index = parent.index;
-      this.tags.splice(index,1);
-      this.tags = this.tags.slice();  
     },
     /**
      * _keyDown is fired when user enters a key in the input
