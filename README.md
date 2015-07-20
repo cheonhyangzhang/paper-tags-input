@@ -7,6 +7,10 @@ paper-tags-input is a list of tags with a single-line text field with Material D
 
 [Documentation and Demo](http://cheonhyangzhang.github.io/paper-tags-input/components/paper-tags-input/)
 
+## Installation
+
+	bower install paper-tags-input
+
 ## Dependencies
 
 Element dependencies are managed via [Bower](http://bower.io/). You can
