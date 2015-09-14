@@ -74,7 +74,7 @@ If you want to save it in bower.json file, remember to add flag --save
     </template>
     </div>
      <template is="dom-if" if="{{enableAdd}}">
-       <paper-input id="tag-input" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
+       <paper-input id="tag-input" on-focusout="_focusOut" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
      </template>
     
   </template>
@@ -197,6 +197,19 @@ If you want to save it in bower.json file, remember to add flag --save
      */
     _getInputVal: function(){
       return this.input_value.trim();
+    },
+     /**
+     * _focusOut is fired when input lose focus
+     *
+     * @param {object} event object
+     */
+    _focusOut: function(e) {
+      var tag = this._getInputVal();
+      if (typeof(tag) != undefined && tag != ""){
+        this._addTag(this._getInputVal());
+        this.input_value = "";
+      }
+
     },
     /**
      * _keyDown is fired when user enters a key in the input
