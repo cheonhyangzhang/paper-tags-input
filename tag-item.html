@@ -28,22 +28,49 @@ tag-item is a tag element used by tags-input to show tags with a closed button.
       box-sizing: border-box;
       font-family: 'Roboto', 'Noto', sans-serif;
     }    
-    .tag-item{
+    .tag-value{
+      margin-top: 11px;     
+    }
+    .tag-item-container{
       background-color: var(--light-primary-color);
       border-radius: 20px;
       float:left;
       margin-left:6px;
       margin-bottom:3px;
-      padding-left:6px;
+      padding-left:17px;
     }
-    #tag-value{
-      margin-top: 11px;     
+    
+    .large{
+ 
+      font-size:18px;
     }
+   
+    .large paper-icon-button::shadow #icon{
+        width: 22px;
+        height: 22px;
+    }
+
+    .medium{
+      font-size:14px;
+    }
+    .medium paper-icon-button::shadow #icon{
+        width: 18px;
+        height: 18px;
+    }
+    .small{
+      font-size:12px;
+    }
+    .small paper-icon-button::shadow #icon{
+        width: 14px;
+        height: 14px;
+    }
+
+
   </style>
 
   <template>
-      <div class="tag-item">
-        <span id="tag-value">{{value}}</span>
+      <div class$="{{_tagSize(size)}}">
+        <span class="tag-value">{{value}}</span>
         <template is="dom-if" if="{{enableRemove}}">
           <paper-icon-button on-tap="_removeItem" icon="icons:cancel"></paper-icon-button>
         </template>
@@ -64,6 +91,13 @@ tag-item is a tag element used by tags-input to show tags with a closed button.
       * index of the tag
       */
        index:Number,
+      /**
+      * size of the tags, possible values: small, medium, large
+      */
+       size:{
+        type:String,
+        value:'large'
+       },
        /**
        * Boolean flag to indicate if enable remove operation
        */
@@ -84,6 +118,13 @@ tag-item is a tag element used by tags-input to show tags with a closed button.
         notify: true
       },
     },
+    /**
+     * _tagSize is the internal method to compute size css name
+     *
+     */
+     _tagSize:function(size){
+       return size + " tag-item-container";
+     },
     /**
      * _removeItem is the internal method to remove a tag from the tags list
      *

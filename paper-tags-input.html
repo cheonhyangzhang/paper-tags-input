@@ -69,7 +69,7 @@ If you want to save it in bower.json file, remember to add flag --save
   <h3>{{label}}</h3> 
     <div class="clearfix" id="tags-items">
     <template is="dom-repeat" items="{{tags}}">
-      <tag-item tags="{{tags}}" enable-remove="{{enableRemove}}" index="{{index}}" value="{{item}}"></tag-item>
+      <tag-item size="{{size}}" tags="{{tags}}" enable-remove="{{enableRemove}}" index="{{index}}" value="{{item}}"></tag-item>
       </div>
     </template>
     </div>
@@ -97,6 +97,13 @@ If you want to save it in bower.json file, remember to add flag --save
         notify: true,
         value:[],
       },
+      /**
+      * size of the tags, possible values: small, medium, large
+      */
+       size:{
+        type:String,
+        value:'large'
+       },
       /**
        * The error message that will show up if a user tries to add an empty tag.
        */
