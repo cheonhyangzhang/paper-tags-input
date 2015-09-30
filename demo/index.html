@@ -16,6 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../paper-tags-input.html">
     <link rel="import" href="../../paper-material/paper-material.html">
+    <link rel="import" href="../../marked-element/marked-element.html">
   </head>
   <style>
   .container{
@@ -26,6 +27,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template is="dom-bind" id="app">
     <paper-material class="container">
     <p>An example of <code>&lt;paper-tags-input&gt;</code>:</p>
+    <paper-material class="container">
+    <code>
+    &lt;paper-tags-input tags=&quot;{{testtags}}&quot; placeholder=&quot;Please enter a test tag for this&quot; empty-error-message=&quot;Oops. Tag could not be empty&quot; label=&quot;Demo label&quot; &gt;
+    </code>
+    </paper-material>
     <paper-tags-input tags="{{testtags}}" 
     placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Demo label" >
     </paper-tags-input>
@@ -33,33 +39,91 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-material class="container">
     <p>A example of <code>&lt;paper-tags-input&gt;</code> that only supports remove tags but not add tags:</p>
+    <paper-material class="container">
+    <code>
+    &lt;paper-tags-input enable-add=&quot;{{enable_add}}&quot; tags=&quot;{{testtags}}&quot; placeholder=&quot;Please enter a test tag for this&quot; empty-error-message=&quot;Oops. Tag could not be empty&quot; label=&quot;Remove only&quot; &gt; &lt;/paper-tags-input&gt;    
+    </code>
+    </paper-material>
+
     <paper-tags-input enable-add="{{enable_add}}" tags="{{testtags}}" 
-    placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Demo label" >
+    placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Remove only" >
     </paper-tags-input>
     </paper-material>
 
 
     <paper-material class="container">
     <p>A example of <code>&lt;paper-tags-input&gt;</code> that only supports remove tags but not add tags:</p>
+    <paper-material class="container">
+    <code>
+    &lt;paper-tags-input enable-remove=&quot;{{enable_remove}}&quot; tags=&quot;{{testtags}}&quot; placeholder=&quot;Please enter a test tag for this&quot; empty-error-message=&quot;Oops. Tag could not be empty&quot; label=&quot;Read only&quot; &gt; &lt;/paper-tags-input&gt;    
+    </code>
+    </paper-material>
     <paper-tags-input enable-remove="{{enable_remove}}" tags="{{testtags}}" 
-    placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Demo label" >
+    placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Read only" >
     </paper-tags-input>
     </paper-material>
 
     <paper-material class="container">
     <p>A example of <code>&lt;paper-tags-input&gt;</code> use medium and small size of tags:</p>
+    <paper-material class="container">
+    <code>
+    &lt;paper-tags-input size=&quot;medium&quot; tags=&quot;{{testtags}}&quot; placeholder=&quot;Please enter a test tag for this&quot; empty-error-message=&quot;Oops. Tag could not be empty&quot; label=&quot;Medium&quot; &gt; &lt;/paper-tags-input&gt;    
+    </code>
+    </paper-material>
     <paper-tags-input size="medium" tags="{{testtags}}" 
     placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Medium" >
     </paper-tags-input>
+    <paper-material class="container">
+    <code>
+    &lt;paper-tags-input size=&quot;medium&quot; enable-remove=&quot;{{enable_remove}}&quot; tags=&quot;{{testtags}}&quot; placeholder=&quot;Please enter a test tag for this&quot; empty-error-message=&quot;Oops. Tag could not be empty&quot; label=&quot;Medium&quot; &gt; &lt;/paper-tags-input&gt;     
+    </code>
+    </paper-material>
     <paper-tags-input size="medium" enable-remove="{{enable_remove}}" tags="{{testtags}}" 
     placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Medium" >
     </paper-tags-input>
+    <paper-material class="container">
+    <code>
+    &lt;paper-tags-input size=&quot;small&quot; tags=&quot;{{testtags}}&quot; placeholder=&quot;Please enter a test tag for this&quot; empty-error-message=&quot;Oops. Tag could not be empty&quot; label=&quot;Small&quot; &gt; &lt;/paper-tags-input&gt;    
+    </code>
+    </paper-material>
     <paper-tags-input size="small" tags="{{testtags}}" 
     placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Small" >
     </paper-tags-input>
+    <paper-material class="container">
+    <code>
+    &lt;paper-tags-input size=&quot;small&quot; enable-remove=&quot;{{enable_remove}}&quot; tags=&quot;{{testtags}}&quot; placeholder=&quot;Please enter a test tag for this&quot; empty-error-message=&quot;Oops. Tag could not be empty&quot; label=&quot;Small&quot; &gt; &lt;/paper-tags-input&gt;    
+    </code>
+    </paper-material>
     <paper-tags-input size="small" enable-remove="{{enable_remove}}" tags="{{testtags}}" 
     placeholder="Please enter a test tag for this" empty-error-message="Oops. Tag could not be empty" label="Small" >
     </paper-tags-input>
+    </paper-material>
+
+
+    <paper-material class="container">
+    <p>A example of <code>&lt;paper-tags-input&gt;</code> use custom tag color and font color of tags:</p>
+    <paper-material class="container">
+    <code>
+    &lt;paper-tags-input tags=&quot;{{testtags}}&quot; placeholder=&quot;Please enter a test tag for this&quot; tag-color=&quot;red&quot; font-color=&quot;#ffffff&quot; empty-error-message=&quot;Oops. Tag could not be empty&quot; label=&quot;Custom color&quot; &gt; &lt;/paper-tags-input&gt;    
+    </code>
+    </paper-material>
+    <paper-tags-input tags="{{testtags}}" 
+    placeholder="Please enter a test tag for this" tag-color="red" font-color="#ffffff" empty-error-message="Oops. Tag could not be empty" label="Custom color" >
+    </paper-tags-input>
+    </paper-material>
+    </paper-material>
+
+    <paper-material class="container">
+    <p>A example of <code>&lt;paper-tags-input&gt;</code> that has unicode language tags:</p>
+    <paper-material class="container">
+    <code>
+    &lt;paper-tags-input tags=&quot;{{unicodes}}&quot; placeholder=&quot;Please enter a test tag for this&quot; label=&quot;Unicode tags&quot; &gt; 
+    </code>
+    </paper-material>
+    <paper-tags-input tags="{{unicodes}}" 
+    placeholder="Please enter a test tag for this" label="Unicode tags" >
+    </paper-tags-input>
+    </paper-material>
     </paper-material>
 
     
@@ -71,6 +135,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.enable_add = false;
         app.enable_remove = false;
         app.testtags = ['QianBenLulu', 'Taeyeon','Jessica','Tiffany','Sunny','Yuri','Hyeoyeon','Seohyun','Sooyoung','Yoona']
+        app.unicodes = ['千本露露', '소녀시대','こまる','君のことがすきです','Mesut Özil','السلام عليكم','สวัสดี','Товарищи, здравствуйте!']
       });
     </script>
     </template>

@@ -69,7 +69,7 @@ tag-item is a tag element used by tags-input to show tags with a closed button.
   </style>
 
   <template>
-      <div class$="{{_tagSize(size)}}">
+      <div style$="{{_containerColor(tagColor, fontColor)}}" class$="{{_containerClass(size)}}">
         <span class="tag-value">{{value}}</span>
         <template is="dom-if" if="{{enableRemove}}">
           <paper-icon-button on-tap="_removeItem" icon="icons:cancel"></paper-icon-button>
@@ -99,6 +99,14 @@ tag-item is a tag element used by tags-input to show tags with a closed button.
         value:'large'
        },
        /**
+       * CSS color of tag
+       */
+       tagColor:String, 
+       /**
+       * CSS color of text and remove button
+       */
+       fontColor:String, 
+       /**
        * Boolean flag to indicate if enable remove operation
        */
        enableRemove:{
@@ -119,10 +127,24 @@ tag-item is a tag element used by tags-input to show tags with a closed button.
       },
     },
     /**
-     * _tagSize is the internal method to compute size css name
+     * _containerColor is the internal method to compute background style
      *
      */
-     _tagSize:function(size){
+     _containerColor:function(tagColor, fontColor){
+      var styles = []
+      if (typeof(tagColor) != "undefined"){
+        styles.push("background-color:" + tagColor);
+      }
+      if (typeof(fontColor) != "undefined"){
+        styles.push("color:" + fontColor);
+      }
+      return styles.join(";");
+     },
+    /**
+     * _containerClass is the internal method to compute size css name
+     *
+     */
+     _containerClass:function(size){
        return size + " tag-item-container";
      },
     /**
