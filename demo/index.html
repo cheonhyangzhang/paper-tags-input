@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../paper-tags-input.html">
     <link rel="import" href="../../paper-material/paper-material.html">
-    <link rel="import" href="../../marked-element/marked-element.html">
+    
   </head>
   <style>
   .container{
@@ -29,7 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <p>An example of <code>&lt;paper-tags-input&gt;</code>:</p>
     <paper-material class="container">
     <code>
-    &lt;paper-tags-input tags=&quot;{{testtags}}&quot; placeholder=&quot;Please enter a test tag for this&quot; empty-error-message=&quot;Oops. Tag could not be empty&quot; label=&quot;Demo label&quot; &gt;
+    &lt;paper-tags-input tags=&quot;{{testtags}}&quot; placeholder=&quot;Please enter a test tag for this&quot; empty-error-message=&quot;Oops. Tag could not be empty&quot; label=&quot;Demo label&quot; &gt;&lt;/paper-tags-input&gt;  
     </code>
     </paper-material>
     <paper-tags-input tags="{{testtags}}" 
@@ -128,7 +128,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     
 
-
     <script>
         window.addEventListener('WebComponentsReady', function() {
         var app = document.querySelector('#app');
@@ -138,6 +137,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.unicodes = ['千本露露', '소녀시대','こまる','君のことがすきです','Mesut Özil','السلام عليكم','สวัสดี','Товарищи, здравствуйте!']
       });
     </script>
+
     </template>
   </body>
 </html>

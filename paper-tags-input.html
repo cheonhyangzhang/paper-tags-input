@@ -243,12 +243,12 @@ If you want to save it in bower.json file, remember to add flag --save
       var keyVal = e.which;
       if (keyVal == 13){
         if (this._getInputVal() == ""){
-          var input = document.querySelector('#tag-input');
+          var input = Polymer.dom(this.root).querySelector('#tag-input');;
           input.errorMessage = this.emptyErrorMessage;
           input.invalid=true;
         }
         else if (this.tags.indexOf(this._getInputVal()) >= 0){
-          var input = document.querySelector('#tag-input');
+          var input = Polymer.dom(this.root).querySelector('#tag-input');;
           input.errorMessage = this.duplicateErrorMessage;
           input.invalid=true;
         }
@@ -258,7 +258,7 @@ If you want to save it in bower.json file, remember to add flag --save
         }
       }
       else{
-          var input = document.querySelector('#tag-input');
+          var input = Polymer.dom(this.root).querySelector('#tag-input');;
           input.invalid=false;
         }
     }
