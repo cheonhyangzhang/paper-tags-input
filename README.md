@@ -1,5 +1,7 @@
 # paper-tags-input
-Polymer element for tags input. 
+[![Travis](https://img.shields.io/travis/cheonhyangzhang/paper-tags-input.svg?style=flat)](https://travis-ci.org/cheonhyangzhang/paper-tags-input)
+
+Polymer element for tags input.
 
 paper-tags-input is a list of tags with a single-line text field with Material Design styling.
 
