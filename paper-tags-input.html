@@ -77,7 +77,7 @@ If you want to save it in bower.json file, remember to add flag --save
   <h3>{{label}}</h3> 
     <div class="clearfix" id="tags-items">
     <template is="dom-repeat" items="{{tags}}">
-      <tag-item font-color="{{fontColor}}" tag-color="{{tagColor}}" size="{{size}}" tags="{{tags}}" enable-remove="{{enableRemove}}" index="{{index}}" value="{{item}}"></tag-item>
+      <tag-item font-color="{{fontColor}}" tag-color="{{tagColor}}" size="{{size}}" enable-remove="{{enableRemove}}" index="{{index}}" value="{{item}}"></tag-item>
       </div>
     </template>
     </div>
@@ -165,9 +165,12 @@ If you want to save it in bower.json file, remember to add flag --save
       /**
        * Internal variable to hold the value of paper-input.
        */
-      _input_value: String,
+      _input_value: String
 
-
+    },
+    
+    listeners: {
+        'tag-item-remove': '_onTagItemRemove'
     },
 
     // Element Lifecycle
@@ -210,8 +213,8 @@ If you want to save it in bower.json file, remember to add flag --save
       if (typeof(this.tags) == 'undefined'){
         this.tags = [];
       }
-      this.tags.push(tag);
-      this.tags = this.tags.slice();  
+      
+      this.push('tags', tag);
     },
     /**
      * _getInputVal is the internal method to get the value of paper-input. It performs a trim on the value.
@@ -261,6 +264,15 @@ If you want to save it in bower.json file, remember to add flag --save
           var input = Polymer.dom(this.root).querySelector('#tag-input');;
           input.invalid=false;
         }
+    },
+    
+    /**
+     * Handler for 'tag-item-remove' event, which is fired when a <tag-item> is being removed.
+     *
+     * @param {Object} event object
+     */
+    _onTagItemRemove: function(e) {
+         this.splice('tags', e.detail.index, 1);
     }
 
   });
