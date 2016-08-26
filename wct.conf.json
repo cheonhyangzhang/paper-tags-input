@@ -1,7 +1,18 @@
 {
-  "plugins": {
-    "local": {
-      "browsers": ["chrome","firefox"]
+  "suites": ["test/basic-test.html"],
+    "verbose": true,
+    "plugins": {
+      "istanbul": {
+          "dir": "./coverage",
+          "reporters": ["text-summary", "lcov"],
+          "include": [
+              "/paper-tags-input.html",
+              "/tag-item.html"
+          ],
+          "exclude": []
+      },
+      "local": {
+        "browsers": ["chrome", "firefox"]
     }
   }
 }
