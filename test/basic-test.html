@@ -30,27 +30,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       suite('<paper-tags-input>', function() {
 
         test('test tags-input initial values', function() {
-          assert.equal(myEl.tags, []);
+          assert.deepEqual(myEl.tags, []);
+          // expect(myEl.tags).to.deep.equal([]);
           assert.equal(myEl.tags.length, 0);
           assert.equal(myEl.emptyErrorMessage, "Tag cannot be empty");
           assert.equal(myEl.duplicateErrorMessage, "Tag must be identical");
           assert.equal(myEl.label, "");
-          assert.equal(myEl._input_value, "");
-          assert.equal(myEl.placehodler, "Please enter a new tag");
+          assert.equal(myEl._input_value, undefined);
+          assert.equal(myEl.placeholder, "Please enter a new tag");
         });
 
         test('_addTag method', function() {
           myEl._addTag("QianBenLuLu");
-          assert.equal(myEl.tags, ["QianBenLuLu"]);
+          assert.deepEqual(myEl.tags[0], 'QianBenLuLu');
           assert.equal(myEl.tags.length, 1);
-          myEl._input_value = "Tayeon";
-          assert.equal(myEl._getInputVal, "Tayeon");
-          myEl._input_value = " Tayeon";
-          assert.equal(myEl._getInputVal, "Tayeon");
-          myEl._input_value = " Tayeon   ";
-          assert.equal(myEl._getInputVal, "Tayeon");
-          myEl._input_value = " Tayeon   Jessica";
-          assert.equal(myEl._getInputVal, "Tayeon   Jessica");
+          myEl.input_value = "Tayeon";
+          assert.equal(myEl._getInputVal(), "Tayeon");
+          myEl.nput_value = " Tayeon";
+          assert.equal(myEl._getInputVal(), "Tayeon");
+          myEl.input_value = " Tayeon   ";
+          assert.equal(myEl._getInputVal(), "Tayeon");
+          myEl.input_value = " Tayeon   Jessica";
+          assert.equal(myEl._getInputVal(), "Tayeon   Jessica");
         });
 
 
