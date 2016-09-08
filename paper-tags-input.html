@@ -231,11 +231,21 @@ If you want to save it in bower.json file, remember to add flag --save
      */
     _focusOut: function(e) {
       var tag = this._getInputVal();
-      if (typeof(tag) != undefined && tag != ""){
-        this._addTag(this._getInputVal());
-        this.input_value = "";
-      }
+      var input = Polymer.dom(this.root).querySelector('#tag-input');
 
+      if (tag == ""){
+        input.errorMessage = this.emptyErrorMessage;
+        input.invalid=true;
+      }
+      else if (this.tags.indexOf(tag) >= 0){
+        input.errorMessage = this.duplicateErrorMessage;
+        input.invalid=true;
+      }
+      else if (typeof(tag) != undefined && tag != "") {
+        this._addTag(tag);
+        this.input_value = "";
+        input.invalid=false;
+      }
     },
     /**
      * _keyDown is fired when user enters a key in the input
@@ -244,26 +254,10 @@ If you want to save it in bower.json file, remember to add flag --save
      */
     _keyDown: function(e) {
       var keyVal = e.which;
-      if (keyVal == 13){
-        if (this._getInputVal() == ""){
-          var input = Polymer.dom(this.root).querySelector('#tag-input');;
-          input.errorMessage = this.emptyErrorMessage;
-          input.invalid=true;
-        }
-        else if (this.tags.indexOf(this._getInputVal()) >= 0){
-          var input = Polymer.dom(this.root).querySelector('#tag-input');;
-          input.errorMessage = this.duplicateErrorMessage;
-          input.invalid=true;
-        }
-        else{
-          this._addTag(this._getInputVal());
-          this.input_value = "";
-        }
+      if (keyVal != 13){
+        var input = Polymer.dom(this.root).querySelector('#tag-input');;
+        input.invalid=false;
       }
-      else{
-          var input = Polymer.dom(this.root).querySelector('#tag-input');;
-          input.invalid=false;
-        }
     },
     
     /**
