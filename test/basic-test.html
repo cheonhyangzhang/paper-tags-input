@@ -22,16 +22,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <body>
 
     <!-- You can use the document as a place to set up your fixtures. -->
-    <paper-tags-input></paper-tags-input>
+    <test-fixture id="basic">
+      <template>
+        <paper-tags-input> </paper-tags-input>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="add-tags">
+      <template>
+        <paper-tags-input> </paper-tags-input>
+      </template>
+    </test-fixture>
+    <test-fixture id="duplicate">
+      <template>
+        <paper-tags-input> </paper-tags-input>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="disabled-add">
+      <template>
+        <paper-tags-input> </paper-tags-input>
+      </template>
+    </test-fixture>
 
     <script>
-      var myEl = document.querySelector('paper-tags-input');
-
       suite('<paper-tags-input>', function() {
-
+        var myEl;
+        setup(function() {
+          myEl = fixture('basic');
+        });
         test('test tags-input initial values', function() {
           assert.deepEqual(myEl.tags, []);
-          // expect(myEl.tags).to.deep.equal([]);
           assert.equal(myEl.tags.length, 0);
           assert.equal(myEl.emptyErrorMessage, "Tag cannot be empty");
           assert.equal(myEl.duplicateErrorMessage, "Tag must be identical");
@@ -39,22 +60,76 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           assert.equal(myEl._input_value, undefined);
           assert.equal(myEl.placeholder, "Please enter a new tag");
         });
-
+      });
+      suite('<paper-tags-input>', function() {
+        var myEl;
+        setup(function() {
+          myEl = fixture('add-tags');
+        });
         test('_addTag method', function() {
+          assert.deepEqual(myEl.tags, []);
           myEl._addTag("QianBenLuLu");
+          assert.equal(myEl._getInputVal(), "");
           assert.deepEqual(myEl.tags[0], 'QianBenLuLu');
           assert.equal(myEl.tags.length, 1);
           myEl.input_value = "Tayeon";
           assert.equal(myEl._getInputVal(), "Tayeon");
-          myEl.nput_value = " Tayeon";
+          myEl.input_value = " Tayeon";
           assert.equal(myEl._getInputVal(), "Tayeon");
           myEl.input_value = " Tayeon   ";
           assert.equal(myEl._getInputVal(), "Tayeon");
           myEl.input_value = " Tayeon   Jessica";
           assert.equal(myEl._getInputVal(), "Tayeon   Jessica");
         });
+        test('should not allow to add empty tag', function() {
+          // myEl._addTag("");
+        });
+        test('should still work if tags is undefined', function() {
+          myEl.tags = undefined;
+          myEl._addTag("QianBenLuLu");
+          assert.deepEqual(myEl.tags[0], 'QianBenLuLu');
+          assert.equal(myEl.tags.length, 1);
+        });
+      });
+      suite('<paper-tags-input>', function() {
+        var myEl;
+        setup(function() {
+          myEl = fixture('duplicate');
+        });
+        test('should not allow to add duplicate tag', function() {
+          // myEl._addTag("Hello World");
+          // myEl._addTag("Hello World");
+          // assert.deepEqual(myEl.tags[0], 'QianBenLuLu');
+          // assert.equal(myEl.tags.length, 1);
+          // var input = myEl.querySelector('paper-input');
+          // assert.equal(input.errorMessage, myEl.duplicateErrorMessage);
+          // assert.equal(input.invalid, true);
+          // myEl._addTag("QianBenLuLu2");
+          // assert.deepEqual(myEl.tags[0], 'QianBenLuLu');
+          // assert.deepEqual(myEl.tags[1], 'QianBenLuLu2');
+          // assert.equal(myEl.tags.length, 2);
+        });
+      });
 
-
+      suite('paper-tags-input should work as expected when enableAdd is false', function() {
+        var myEl;
+        setup(function() {
+          myEl = fixture('disabled-add');
+          myEl.tags = ['a','b'];
+          myEl.enableAdd = false;
+        });
+        test('enableAdd should be false', function(){
+          assert.equal(myEl.enableAdd, false);
+          assert.equal(myEl.tags.length, 2);
+          assert.equal(myEl.tags[0], 'a');
+          assert.equal(myEl.tags[1], 'b');
+        });
+        test('should not be able to add tag when enableAdd is false', function(){
+          myEl._addTag("QianBenLuLu");
+          assert.equal(myEl.tags.length, 2);
+          assert.equal(myEl.tags[0], 'a');
+          assert.equal(myEl.tags[1], 'b');
+        });
       });
     </script>
 

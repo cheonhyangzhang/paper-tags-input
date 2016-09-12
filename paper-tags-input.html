@@ -214,13 +214,13 @@ If you want to save it in bower.json file, remember to add flag --save
         this.tags = [];
       }
       if (tag == ""){
-        var input = Polymer.dom(this.root).querySelector('#tag-input');;
+        var input = Polymer.dom(this.root).querySelector('paper-input');;
         input.errorMessage = this.emptyErrorMessage;
         input.invalid=true;
         return;
       }
       else if (this.tags.indexOf(tag) >= 0){
-        var input = Polymer.dom(this.root).querySelector('#tag-input');;
+        var input = Polymer.dom(this.root).querySelector('paper-input');;
         input.errorMessage = this.duplicateErrorMessage;
         input.invalid=true;
         return;
