@@ -82,7 +82,7 @@ If you want to save it in bower.json file, remember to add flag --save
     </template>
     </div>
      <template is="dom-if" if="{{enableAdd}}">
-       <paper-input id="tag-input" on-focusout="_focusOut" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
+       <paper-input on-focusout="_focusOut" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
      </template>
 
   </template>
@@ -260,7 +260,7 @@ If you want to save it in bower.json file, remember to add flag --save
         this._addTag(this._getInputVal());
       }
       else{
-        var input = Polymer.dom(this.root).querySelector('#tag-input');;
+        var input = Polymer.dom(this.root).querySelector('paper-input');;
         input.invalid=false;
       }
     },
