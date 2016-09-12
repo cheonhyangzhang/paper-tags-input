@@ -213,13 +213,13 @@ If you want to save it in bower.json file, remember to add flag --save
       if (typeof(this.tags) == 'undefined'){
         this.tags = [];
       }
-      if (this._getInputVal() == ""){
+      if (tag == ""){
         var input = Polymer.dom(this.root).querySelector('#tag-input');;
         input.errorMessage = this.emptyErrorMessage;
         input.invalid=true;
         return;
       }
-      else if (this.tags.indexOf(this._getInputVal()) >= 0){
+      else if (this.tags.indexOf(tag) >= 0){
         var input = Polymer.dom(this.root).querySelector('#tag-input');;
         input.errorMessage = this.duplicateErrorMessage;
         input.invalid=true;
