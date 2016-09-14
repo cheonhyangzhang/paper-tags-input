@@ -25,7 +25,7 @@ Use a label property to show the label for tags input and placeholder property f
     <paper-tags-input label="Tags" placeholder="Please enter the tag"></paper-tags-input>
 
 It may include an optional error message. For now, the tags list is case sensitive. So Taeyeon and taeyeon will not be considered as duplicate.
-  
+
     <paper-tags-input empty-error-message="Tag could not be empty"></paper-tags-input>
     <paper-tags-input duplicate-error-message="Tag could not be duplicate"></paper-tags-input>
 
@@ -65,26 +65,26 @@ If you want to save it in bower.json file, remember to add flag --save
       box-sizing: border-box;
       font-family: 'Roboto', 'Noto', sans-serif;
     }
-    .clearfix:after { 
+    .clearfix:after {
      content: " ";
-     display: block; 
-     height: 0; 
+     display: block;
+     height: 0;
      clear: both;
     }
   </style>
 
   <template>
-  <h3>{{label}}</h3> 
-    <div class="clearfix" id="tags-items">
+  <h3>{{label}}</h3>
+    <div class="clearfix" >
     <template is="dom-repeat" items="{{tags}}">
       <tag-item font-color="{{fontColor}}" tag-color="{{tagColor}}" size="{{size}}" enable-remove="{{enableRemove}}" index="{{index}}" value="{{item}}"></tag-item>
       </div>
     </template>
     </div>
      <template is="dom-if" if="{{enableAdd}}">
-       <paper-input id="tag-input" on-focusout="_focusOut" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
+       <paper-input on-focusout="_focusOut" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
      </template>
-    
+
   </template>
 
 </dom-module>
@@ -168,7 +168,7 @@ If you want to save it in bower.json file, remember to add flag --save
       _input_value: String
 
     },
-    
+
     listeners: {
         'tag-item-remove': '_onTagItemRemove'
     },
@@ -213,8 +213,21 @@ If you want to save it in bower.json file, remember to add flag --save
       if (typeof(this.tags) == 'undefined'){
         this.tags = [];
       }
-      
+      if (tag == ""){
+        var input = Polymer.dom(this.root).querySelector('paper-input');;
+        input.errorMessage = this.emptyErrorMessage;
+        input.invalid=true;
+        return;
+      }
+      else if (this.tags.indexOf(tag) >= 0){
+        var input = Polymer.dom(this.root).querySelector('paper-input');;
+        input.errorMessage = this.duplicateErrorMessage;
+        input.invalid=true;
+        return;
+      }
+
       this.push('tags', tag);
+      this.input_value = "";
     },
     /**
      * _getInputVal is the internal method to get the value of paper-input. It performs a trim on the value.
@@ -233,7 +246,6 @@ If you want to save it in bower.json file, remember to add flag --save
       var tag = this._getInputVal();
       if (typeof(tag) != undefined && tag != ""){
         this._addTag(this._getInputVal());
-        this.input_value = "";
       }
 
     },
@@ -245,27 +257,14 @@ If you want to save it in bower.json file, remember to add flag --save
     _keyDown: function(e) {
       var keyVal = e.which;
       if (keyVal == 13){
-        if (this._getInputVal() == ""){
-          var input = Polymer.dom(this.root).querySelector('#tag-input');;
-          input.errorMessage = this.emptyErrorMessage;
-          input.invalid=true;
-        }
-        else if (this.tags.indexOf(this._getInputVal()) >= 0){
-          var input = Polymer.dom(this.root).querySelector('#tag-input');;
-          input.errorMessage = this.duplicateErrorMessage;
-          input.invalid=true;
-        }
-        else{
-          this._addTag(this._getInputVal());
-          this.input_value = "";
-        }
+        this._addTag(this._getInputVal());
       }
       else{
-          var input = Polymer.dom(this.root).querySelector('#tag-input');;
-          input.invalid=false;
-        }
+        var input = Polymer.dom(this.root).querySelector('paper-input');;
+        input.invalid=false;
+      }
     },
-    
+
     /**
      * Handler for 'tag-item-remove' event, which is fired when a <tag-item> is being removed.
      *
