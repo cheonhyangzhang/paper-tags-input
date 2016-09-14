@@ -45,6 +45,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </test-fixture>
 
+    <test-fixture id="wrong-tags">
+      <template>
+        <paper-tags-input> </paper-tags-input>
+      </template>
+    </test-fixture>
+
     <script>
       suite('<paper-tags-input>', function() {
         var myEl;
@@ -96,11 +102,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         setup(function() {
           myEl = fixture('duplicate');
         });
+        test('multiple paper-tags-input in the same page should not share tags variable when tags property is not given', function() {
+          assert.equal(myEl.tags.length, 0);
+          assert.deepEqual(myEl.tags, []);
+        });
         test('should not allow to add duplicate tag', function() {
-          // myEl._addTag("Hello World");
-          // myEl._addTag("Hello World");
+          // assert.deepEqual(myEl.tags, []);
+          // myEl._addTag('QianBenLuLu');
           // assert.deepEqual(myEl.tags[0], 'QianBenLuLu');
-          // assert.equal(myEl.tags.length, 1);
+          // assert.deepEqual(myEl.tags.length, 1);
+          // myEl._addTag('QianBenLuLu');
           // var input = myEl.querySelector('paper-input');
           // assert.equal(input.errorMessage, myEl.duplicateErrorMessage);
           // assert.equal(input.invalid, true);
