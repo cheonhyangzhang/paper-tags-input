@@ -1,0 +1,279 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="tag-item.html">
+
+<!--
+
+paper-tags-input is a list of tags with a single-line text field with Material Design styling.
+
+    <paper-tags-input></paper-tags-input>
+
+Use a label property to show the label for tags input and placeholder property for the placeholder in paper-input element.
+
+    <paper-tags-input label="Tags" placeholder="Please enter the tag"></paper-tags-input>
+
+It may include an optional error message. For now, the tags list is case sensitive. So Taeyeon and taeyeon will not be considered as duplicate.
+
+    <paper-tags-input empty-error-message="Tag could not be empty"></paper-tags-input>
+    <paper-tags-input duplicate-error-message="Tag could not be duplicate"></paper-tags-input>
+
+Tags list are stored in the property of tags.
+
+    <paper-tags-input tags="{{tags_list}}"></paper-tags-input>
+
+<b>Styling</b>
+
+For the color of tags, it is using theme color --light-primary-color by default.
+
+But you can change the color by applying custom colors.
+
+    <paper-tags-input tag-color="red" font-color="#FFFFFF" tags="{{tags_list}}"></paper-tags-input>
+
+<b>Internaltional</b>
+
+paper-tags-input work with all unicode languages, such as Chinese, Korean, Japanese, German, Russian, Arabic, etc.
+
+<b>Installation</b>
+
+Install with bower
+
+    bower install paper-tags-input
+
+If you want to save it in bower.json file, remember to add flag --save
+
+    bower install --save paper-tags-input
+
+
+@demo
+-->
+<dom-module id="paper-tags-input">
+  <style>
+    :host {
+      display: block;
+      box-sizing: border-box;
+      font-family: 'Roboto', 'Noto', sans-serif;
+    }
+    .clearfix:after {
+     content: " ";
+     display: block;
+     height: 0;
+     clear: both;
+    }
+  </style>
+
+  <template>
+  <h3>{{label}}</h3>
+    <div class="clearfix" >
+    <template is="dom-repeat" items="{{tags}}">
+      <tag-item font-color="{{fontColor}}" tag-color="{{tagColor}}" size="{{size}}" enable-remove="{{enableRemove}}" index="{{index}}" value="{{item}}"></tag-item>
+      </div>
+    </template>
+    </div>
+     <template is="dom-if" if="{{enableAdd}}">
+       <paper-input on-focusout="_focusOut" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
+     </template>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'paper-tags-input',
+
+    properties: {
+
+      /**
+       * list of String that holds tags. Values in this array should be identical and avoids duplicates due to the definition of tags.
+       */
+      tags:{
+        type:Array,
+        notify: true,
+        value:function(){return []},
+      },
+      /**
+      * the CSS color for the tag, e.g. #e5e5e5
+      */
+      tagColor:String,
+      /**
+      * the CSS color for the text and remove button, e.g. #e5e5e5
+      */
+      fontColor:String,
+      /**
+      * size of the tags, possible values: small, medium, large
+      */
+       size:{
+        type:String,
+        value:'large'
+       },
+      /**
+       * The error message that will show up if a user tries to add an empty tag.
+       */
+      emptyErrorMessage:{
+        type:String,
+        value:"Tag cannot be empty"
+      },
+      /**
+       * Boolean flag for whether add tag operation is enabled.
+       */
+      enableAdd:{
+        type:Boolean,
+        value:true
+      },
+      /**
+       * Boolean flag for whether remove tag operation is enabled.
+       */
+      enableRemove:{
+        type:Boolean,
+        value:true
+      },
+      /**
+       * The error message that will show up if a user tries to add a duplicate tag.
+       */
+      duplicateErrorMessage:{
+        type:String,
+        value:"Tag must be identical"
+      },
+      /**
+       * The label that will show up as the label for tags input.
+       */
+      label:{
+        type:String,
+        value:''
+      },
+      /**
+       * The placeholder for the paper-input element.
+       */
+      placeholder:{
+        type:String,
+        value:'Please enter a new tag'
+      },
+      /**
+       * Internal variable to hold the value of paper-input.
+       */
+      _input_value: String
+
+    },
+
+    listeners: {
+        'tag-item-remove': '_onTagItemRemove'
+    },
+
+    // Element Lifecycle
+
+    ready: function() {
+      // `ready` is called after all elements have been configured, but
+      // propagates bottom-up. This element's children are ready, but parents
+      // are not.
+      //
+      // This is the point where you should make modifications to the DOM (when
+      // necessary), or kick off any processes the element wants to perform.
+    },
+
+    attached: function() {
+      // `attached` fires once the element and its parents have been inserted
+      // into a document.
+      //
+      // This is a good place to perform any work related to your element's
+      // visual state or active behavior (measuring sizes, beginning animations,
+      // loading resources, etc).
+    },
+
+    detached: function() {
+      // The analog to `attached`, `detached` fires when the element has been
+      // removed from a document.
+      //
+      // Use this to clean up anything you did in `attached`.
+    },
+
+    // Element Behavior
+    /**
+     * _addTag is the internal method to add a new tag to the list
+     *
+     * @param {string} the tag that needs to be added.
+     */
+    _addTag: function(tag){
+      if (this.enableAdd == false){
+        return;
+      }
+      if (typeof(this.tags) == 'undefined'){
+        this.tags = [];
+      }
+      if (tag == ""){
+        var input = Polymer.dom(this.root).querySelector('paper-input');;
+        input.errorMessage = this.emptyErrorMessage;
+        input.invalid=true;
+        return;
+      }
+      else if (this.tags.indexOf(tag) >= 0){
+        var input = Polymer.dom(this.root).querySelector('paper-input');;
+        input.errorMessage = this.duplicateErrorMessage;
+        input.invalid=true;
+        return;
+      }
+
+      this.push('tags', tag);
+      this.input_value = "";
+    },
+    /**
+     * _getInputVal is the internal method to get the value of paper-input. It performs a trim on the value.
+     *
+     * @return {string} returns the trimmed version of paper-input value.
+     */
+    _getInputVal: function(){
+      return this.input_value.trim();
+    },
+     /**
+     * _focusOut is fired when input lose focus
+     *
+     * @param {object} event object
+     */
+    _focusOut: function(e) {
+      var tag = this._getInputVal();
+      if (typeof(tag) != undefined && tag != ""){
+        this._addTag(this._getInputVal());
+      }
+
+    },
+    /**
+     * _keyDown is fired when user enters a key in the input
+     *
+     * @param {object} event object
+     */
+    _keyDown: function(e) {
+      var keyVal = e.which;
+      if (keyVal == 13){
+        this._addTag(this._getInputVal());
+      }
+      else{
+        var input = Polymer.dom(this.root).querySelector('paper-input');;
+        input.invalid=false;
+      }
+    },
+
+    /**
+     * Handler for 'tag-item-remove' event, which is fired when a <tag-item> is being removed.
+     *
+     * @param {Object} event object
+     */
+    _onTagItemRemove: function(e) {
+         this.splice('tags', e.detail.index, 1);
+    }
+
+  });
+
+</script>

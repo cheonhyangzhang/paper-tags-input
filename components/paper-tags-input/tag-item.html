@@ -1,0 +1,182 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<!--
+tag-item is a tag element used by tags-input to show tags with a closed button.
+
+    <tag-item></tag-item>
+
+@demo
+-->
+<dom-module id="tag-item">
+
+  <style>
+    :host {
+      display: block;
+      box-sizing: border-box;
+      font-family: 'Roboto', 'Noto', sans-serif;
+    }
+    .tag-value{
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .tag-item-container{
+      background-color: var(--light-primary-color);
+      float: left;
+      margin-left: 6px;
+      margin-bottom: 3px;
+    }
+    .large.tag-item-container{
+      border-radius: 20px;
+      padding-left:14px;
+    }
+    .medium.tag-item-container{
+      border-radius: 17px;
+      padding-left: 11px;
+    }
+    .small.tag-item-container{
+      border-radius: 14px;
+      padding-left: 9px;
+    }
+
+    .large{
+      font-size:18px;
+    }
+    .large paper-icon-button{
+        height: 40px;
+        width: 40px;
+    }
+    .large paper-icon-button::shadow #icon{
+        width: 22px;
+        height: 22px;
+    }
+
+    .medium paper-icon-button{
+        height: 34px;
+        width: 34px;
+    }
+    .medium{
+      font-size:14px;
+    }
+    .medium paper-icon-button::shadow #icon{
+        width: 18px;
+        height: 18px;
+    }
+    .small paper-icon-button{
+        height: 30px;
+        width: 30px;
+    }
+    .small{
+      font-size:12px;
+    }
+    .small paper-icon-button::shadow #icon{
+        width: 14px;
+        height: 14px;
+    }
+
+
+  </style>
+
+  <template>
+      <div style$="{{_containerColor(tagColor, fontColor)}}" class$="{{_containerClass(size)}}">
+        <span class="tag-value">{{value}}</span>
+        <template is="dom-if" if="{{enableRemove}}">
+          <paper-icon-button on-tap="_removeItem" icon="icons:cancel"></paper-icon-button>
+        </template>
+        <template is="dom-if" if="{{!enableRemove}}">
+          <paper-icon-button style="width:0px;visibility:hidden;" on-tap="remove" icon="icons:cancel"></paper-icon-button>
+        </template>
+      </div>
+  </template>
+
+</dom-module>
+
+<script>
+
+  Polymer({
+    is: 'tag-item',
+    properties: {
+      /**
+      * Fired when the tag is to be removed from the tag list
+      *
+      * @event tag-item-remove
+      */
+
+      /**
+      * index of the tag
+      */
+       index:Number,
+      /**
+      * size of the tags, possible values: small, medium, large
+      */
+       size:{
+        type:String,
+        value:'large'
+       },
+       /**
+       * CSS color of tag
+       */
+       tagColor:String,
+       /**
+       * CSS color of text and remove button
+       */
+       fontColor:String,
+       /**
+       * Boolean flag to indicate if enable remove operation
+       */
+       enableRemove:{
+        type:Boolean,
+        value:true
+      }
+      ,
+      /**
+      * value of the tag
+      */
+       value:String
+
+    },
+    /**
+     * _containerColor is the internal method to compute background style
+     *
+     */
+     _containerColor:function(tagColor, fontColor){
+      var styles = []
+      if (typeof(tagColor) != "undefined"){
+        styles.push("background-color:" + tagColor);
+      }
+      if (typeof(fontColor) != "undefined"){
+        styles.push("color:" + fontColor);
+      }
+      return styles.join(";");
+     },
+    /**
+     * _containerClass is the internal method to compute size css name
+     *
+     */
+     _containerClass:function(size){
+       return size + " tag-item-container";
+     },
+    /**
+     * Handler for removing the tag item
+     */
+     _removeItem: function() {
+      if (this.enableRemove === true) {
+        this.fire('tag-item-remove', {index: this.index});
+      }
+    }
+
+  });
+
+</script>

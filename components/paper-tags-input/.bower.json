@@ -1,0 +1,40 @@
+{
+  "name": "paper-tags-input",
+  "authors": [
+    "Tianxiang Zhang <cenhiangapply@gmail.com>"
+  ],
+  "description": "An input element for tags.",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "seed"
+  ],
+  "main": "paper-tags-input.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://github.com/cheonhyangzhang/paper-tags-input/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "paper-input": "PolymerElements/paper-input#~1.0.5",
+    "paper-icon-button": "PolymerElements/paper-icon-button#~1.0.2"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  },
+  "_release": "6451d95394",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "6451d9539428fd0df1b1c68dcb6c6238c6fb8b3e"
+  },
+  "_source": "git://github.com/cheonhyangzhang/paper-tags-input.git",
+  "_target": "master",
+  "_originalSource": "cheonhyangzhang/paper-tags-input",
+  "_direct": true
+}
