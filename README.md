@@ -67,4 +67,5 @@ Then, you can run your tests on _all_ of your local browsers via:
 `wct test/some-file.html` will test only the files you specify.
 
 
-
+## LICENSE
+[MIT](https://github.com/cheonhyangzhang/paper-tags-inpu/blob/master/LICENSE)
