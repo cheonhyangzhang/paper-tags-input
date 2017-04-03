@@ -200,6 +200,17 @@ If you want to save it in bower.json file, remember to add flag --save
       // Use this to clean up anything you did in `attached`.
     },
 
+    onRemove: function(e) {
+      // Change listener that gets fired when a user deletes a tag
+      // a tag.
+      this.fire("remove", e);
+    },
+    
+    onAdd: function(e) {
+      //Change listener that gets fired when a user adds a tag
+      this.fire("add", e);
+    },
+
     // Element Behavior
     /**
      * _addTag is the internal method to add a new tag to the list
@@ -228,6 +239,7 @@ If you want to save it in bower.json file, remember to add flag --save
 
       this.push('tags', tag);
       this.input_value = "";
+      this.onAdd(new Event("tag added"));
     },
     /**
      * _getInputVal is the internal method to get the value of paper-input. It performs a trim on the value.
@@ -272,6 +284,7 @@ If you want to save it in bower.json file, remember to add flag --save
      */
     _onTagItemRemove: function(e) {
          this.splice('tags', e.detail.index, 1);
+         this.onRemove(e);
     }
 
   });
