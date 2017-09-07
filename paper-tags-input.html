@@ -56,34 +56,37 @@ If you want to save it in bower.json file, remember to add flag --save
     bower install --save paper-tags-input
 
 
-@demo
+    `paper-tags-input`
+     @customElement
+     @polymer
+     @demo demo/index.html
 -->
 <dom-module id="paper-tags-input">
-  <style>
-    :host {
-      display: block;
-      box-sizing: border-box;
-      font-family: 'Roboto', 'Noto', sans-serif;
-    }
-    .clearfix:after {
-     content: " ";
-     display: block;
-     height: 0;
-     clear: both;
-    }
-  </style>
-
   <template>
-  <h3>{{label}}</h3>
+    <style>
+:host {
+  display: block;
+  box-sizing: border-box;
+  font-family: 'Roboto', 'Noto', sans-serif;
+}
+    .clearfix:after {
+      content: " ";
+      display: block;
+      height: 0;
+      clear: both;
+    }
+    </style>
+
+    <h3>{{label}}</h3>
     <div class="clearfix" >
-    <template is="dom-repeat" items="{{tags}}">
-      <tag-item font-color="{{fontColor}}" tag-color="{{tagColor}}" size="{{size}}" enable-remove="{{enableRemove}}" index="{{index}}" value="{{item}}"></tag-item>
-      </div>
-    </template>
+      <template is="dom-repeat" items="{{tags}}">
+        <tag-item font-color="{{fontColor}}" tag-color="{{tagColor}}" size="{{size}}" enable-remove="{{enableRemove}}" index="{{index}}" value="{{item}}"></tag-item>
     </div>
-     <template is="dom-if" if="{{enableAdd}}">
-       <paper-input on-focusout="_focusOut" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
-     </template>
+      </template>
+      </div>
+      <template is="dom-if" if="{{enableAdd}}">
+        <paper-input on-focusout="_focusOut" error-message="{{emptyErrorMessage}}" label="{{placeholder}}" on-keydown="_keyDown" value="{{input_value}}"></paper-input>
+      </template>
 
   </template>
 
@@ -103,7 +106,7 @@ If you want to save it in bower.json file, remember to add flag --save
       tags:{
         type:Array,
         notify: true,
-        value:function(){return []},
+        value: [],
       },
       /**
       * the CSS color for the tag, e.g. #e5e5e5
