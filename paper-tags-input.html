@@ -59,21 +59,20 @@ If you want to save it in bower.json file, remember to add flag --save
 @demo
 -->
 <dom-module id="paper-tags-input">
-  <style>
-    :host {
-      display: block;
-      box-sizing: border-box;
-      font-family: 'Roboto', 'Noto', sans-serif;
-    }
-    .clearfix:after {
-     content: " ";
-     display: block;
-     height: 0;
-     clear: both;
-    }
-  </style>
-
   <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+        font-family: 'Roboto', 'Noto', sans-serif;
+      }
+      .clearfix:after {
+        content: " ";
+        display: block;
+        height: 0;
+        clear: both;
+      }
+    </style>
   <h3>{{label}}</h3>
     <div class="clearfix" >
     <template is="dom-repeat" items="{{tags}}">
